@@ -18,7 +18,7 @@
 @copying
 This manual is for @command{grep}, a pattern matching engine.
 
-Copyright @copyright{} 1999--2002, 2005, 2008--2014 Free Software Foundation,
+Copyright @copyright{} 1999-2002, 2005, 2008-2017 Free Software Foundation,
 Inc.
 
 @quotation
@@ -175,8 +175,8 @@ This version number should be included in all bug reports.
 @opindex --regexp=@var{pattern}
 @cindex pattern list
 Use @var{pattern} as the pattern.
-This can be used to specify multiple search patterns,
-or to protect a pattern beginning with a @samp{-}.
+If this option is used multiple times or is combined with the
+@option{-f} (@option{--file}) option, search for all patterns given.
 (@option{-e} is specified by POSIX.)
 
 @item -f @var{file}
@@ -185,6 +185,8 @@ or to protect a pattern beginning with a @samp{-}.
 @opindex --file
 @cindex pattern from file
 Obtain patterns from @var{file}, one per line.
+If this option is used multiple times or is combined with the
+@option{-e} (@option{--regexp}) option, search for all patterns given.
 The empty file contains zero patterns, and therefore matches nothing.
 (@option{-f} is specified by POSIX.)
 
@@ -233,6 +235,7 @@ Similarly,
 it must be either at the end of the line
 or followed by a non-word constituent character.
 Word-constituent characters are letters, digits, and the underscore.
+This option has no effect if @option{-x} is also specified.
 
 @item -x
 @itemx --line-regexp
@@ -240,6 +243,8 @@ Word-constituent characters are letters, digits, and the underscore.
 @opindex --line-regexp
 @cindex match the whole line
 Select only those matches that exactly match the whole line.
+For a regular expression pattern, this is like parenthesizing the
+pattern and then surrounding it with @samp{^} and @samp{$}.
 (@option{-x} is specified by POSIX.)
 
 @end table
@@ -333,6 +338,7 @@ do
 done
 @end example
 
+@cindex context lines
 When @command{grep} stops after @var{num} matching lines,
 it outputs any trailing context lines.
 Since context does not include matching lines,
@@ -349,6 +355,9 @@ When the @option{-v} or @option{--invert-match} option is also used,
 @cindex only matching
 Print only the matched (non-empty) parts of matching lines,
 with each such part on a separate output line.
+Output lines use the same delimiters as input, and delimiters are null
+bytes if @option{-z} (@option{--null-data}) is also used (@pxref{Other
+Options}).
 
 @item -q
 @itemx --quiet
@@ -454,10 +463,8 @@ Make sure that the first character of actual line content lies on a tab stop,
 so that the alignment of tabs looks normal.
 This is useful with options that prefix their output to the actual content:
 @option{-H}, @option{-n}, and @option{-b}.
-In order to improve the probability that lines
-from a single file will all start at the same column,
-this also causes the line number and byte offset (if present)
-to be printed in a minimum-size field width.
+This may also prepend spaces to output line numbers and byte offsets
+so that lines from a single file all start at the same column.
 
 @item -u
 @itemx --unix-byte-offsets
@@ -496,8 +503,11 @@ even those that contain newline characters.
 @node Context Line Control
 @subsection Context Line Control
 
+@cindex context lines
+@dfn{Context lines} are non-matching lines that are near a matching line.
+They are output only if one of the following options are used.
 Regardless of how these options are set,
-@command{grep} will never print any given line more than once.
+@command{grep} never outputs any given line more than once.
 If the @option{-o} (@option{--only-matching}) option is specified,
 these options have no effect and a warning is given upon their use.
 
@@ -525,7 +535,7 @@ Print @var{num} lines of leading context before matching lines.
 @opindex -C
 @opindex --context
 @opindex -@var{num}
-@cindex context
+@cindex context lines
 Print @var{num} lines of leading and trailing output context.
 
 @item --group-separator=@var{string}
@@ -592,29 +602,47 @@ this is equivalent to the @samp{--binary-files=text} option.
 @item --binary-files=@var{type}
 @opindex --binary-files
 @cindex binary files
-If a file's allocation metadata,
-or if its data read before a line is selected for output,
+If a file's data or metadata
 indicate that the file contains binary data,
 assume that the file is of type @var{type}.
-By default, @var{type} is @samp{binary},
-and @command{grep} normally outputs either
-a one-line message saying that a binary file matches,
-or no message if there is no match.
-When matching binary data, @command{grep} may treat non-text
-bytes as line terminators.
+Non-text bytes indicate binary data; these are either output bytes that are
+improperly encoded for the current locale (@pxref{Environment
+Variables}), or null input bytes when the
+@option{-z} (@option{--null-data}) option is not given (@pxref{Other
+Options}).
+
+By default, @var{type} is @samp{binary}, and @command{grep}
+suppresses output afer null input binary data is discovered,
+and suppresses output lines that contain improperly encoded data.
+When some output is suppressed, @command{grep} follows any output
+with a one-line message saying that a binary file matches.
 
 If @var{type} is @samp{without-match},
-@command{grep} assumes that a binary file does not match;
+when @command{grep} discovers null input binary data
+it assumes that the rest of the file does not match;
 this is equivalent to the @option{-I} option.
 
 If @var{type} is @samp{text},
-@command{grep} processes a binary file as if it were text;
+@command{grep} processes binary data as if it were text;
 this is equivalent to the @option{-a} option.
 
-@emph{Warning:} @samp{--binary-files=text} might output binary garbage,
-which can have nasty side effects
-if the output is a terminal and
-if the terminal driver interprets some of it as commands.
+When @var{type} is @samp{binary}, @command{grep} may treat non-text
+bytes as line terminators even without the @option{-z}
+(@option{--null-data}) option.  This means choosing @samp{binary}
+versus @samp{text} can affect whether a pattern matches a file.  For
+example, when @var{type} is @samp{binary} the pattern @samp{q$} might
+match @samp{q} immediately followed by a null byte, even though this
+is not matched when @var{type} is @samp{text}.  Conversely, when
+@var{type} is @samp{binary} the pattern @samp{.} (period) might not
+match a null byte.
+
+@emph{Warning:} The @option{-a} (@option{--binary-files=text}) option
+might output binary garbage, which can have nasty side effects if the
+output is a terminal and if the terminal driver interprets some of it
+as commands.  On the other hand, when reading files whose text
+encodings are unknown, it can be helpful to use @option{-a} or to set
+@samp{LC_ALL='C'} in the environment, in order to find more matches
+even if the matches are unsafe for direct display.
 
 @item -D @var{action}
 @itemx --devices=@var{action}
@@ -654,8 +682,10 @@ this is equivalent to the @option{-r} option.
 @opindex --exclude
 @cindex exclude files
 @cindex searching directory trees
-Skip files whose name matches the pattern @var{glob}, using wildcard
-matching.  When searching recursively, skip any subfile whose base
+Skip any command-line file with a name suffix that matches the pattern
+@var{glob}, using wildcard matching; a name suffix is either the whole
+name, or any suffix starting after a @samp{/} and before a
+non-@samp{/}.  When searching recursively, skip any subfile whose base
 name matches @var{glob}; the base name is the part after the last
 @samp{/}.  A pattern can use
 @samp{*}, @samp{?}, and @samp{[}...@samp{]} as wildcards,
@@ -672,9 +702,10 @@ under @option{--exclude}).
 @item --exclude-dir=@var{glob}
 @opindex --exclude-dir
 @cindex exclude directories
-Skip any directory whose name matches the pattern @var{glob}.  When
-searching recursively, skip any subdirectory whose base name matches
-@var{glob}.  Ignore any redundant trailing slashes in @var{glob}.
+Skip any command-line directory with a name suffix that matches the
+pattern @var{glob}.  When searching recursively, skip any subdirectory
+whose base name matches @var{glob}.  Ignore any redundant trailing
+slashes in @var{glob}.
 
 @item -I
 Process a binary file as if it did not contain matching data;
@@ -698,6 +729,7 @@ For each directory operand,
 read and process all files in that directory, recursively.
 Follow symbolic links on the command line, but skip symlinks
 that are encountered recursively.
+Note that if no file operand is given, grep searches the working directory.
 This is the same as the @samp{--directories=recurse} option.
 
 @item -R
@@ -748,8 +780,8 @@ on platforms other than MS-DOS and MS-Windows.
 @opindex -z
 @opindex --null-data
 @cindex zero-terminated lines
-Treat the input as a set of lines, each terminated by a zero byte (the
-ASCII NUL character) instead of a newline.
+Treat input and output data as sequences of lines, each terminated by
+a zero byte (the ASCII NUL character) instead of a newline.
 Like the @option{-Z} or @option{--null} option,
 this option can be used with commands like
 @samp{sort -z} to process arbitrary file names.
@@ -783,6 +815,7 @@ The @samp{C} locale is used if none of these environment variables are set,
 if the locale catalog is not installed,
 or if @command{grep} was not compiled
 with national language support (NLS).
+The shell command @code{locale -a} lists locales that are currently available.
 
 Many of the environment variables in the following list let you
 control highlighting using
@@ -830,6 +863,15 @@ explicit options.
 As this causes problems when writing portable scripts, this feature
 will be removed in a future release of @command{grep}, and @command{grep}
 warns if it is used.  Please use an alias or script instead.
+For example, if @command{grep} is in the directory @samp{/usr/bin} you
+can prepend @file{$HOME/bin} to your @env{PATH} and create an
+executable script @file{$HOME/bin/grep} containing the following:
+
+@example
+#! /bin/sh
+export PATH=/usr/bin
+exec grep --color=auto --devices=skip "$@@"
+@end example
 
 @item GREP_COLOR
 @vindex GREP_COLOR @r{environment variable}
@@ -975,6 +1017,10 @@ interpreted.
 These variables specify the locale for the @env{LC_CTYPE} category,
 which determines the type of characters,
 e.g., which characters are whitespace.
+This category also determines the character encoding, that is, whether
+text is encoded in UTF-8, ASCII, or some other encoding.  In the
+@samp{C} or @samp{POSIX} locale, all characters are encoded as a
+single byte and every byte is a valid character.
 
 @item LANGUAGE
 @itemx LC_ALL
@@ -1070,18 +1116,20 @@ Interpret the pattern as an extended regular expression (ERE).
 @opindex -F
 @opindex --fixed-strings
 @cindex matching fixed strings
-Interpret the pattern as a list of fixed strings, separated
-by newlines, any of which is to be matched.
+Interpret the pattern as a list of fixed strings (instead of regular
+expressions), separated by newlines, any of which is to be matched.
 (@option{-F} is specified by POSIX.)
 
 @item -P
 @itemx --perl-regexp
 @opindex -P
 @opindex --perl-regexp
-@cindex matching Perl regular expressions
-Interpret the pattern as a Perl regular expression.
-This is highly experimental and
+@cindex matching Perl-compatible regular expressions
+Interpret the pattern as a Perl-compatible regular expression (PCRE).
+This is highly experimental, particularly when combined with
+the @option{-z} (@option{--null-data}) option, and
 @samp{grep@ -P} may warn of unimplemented features.
+@xref{Other Options}.
 
 @end table
 
@@ -1104,16 +1152,16 @@ Regular expressions are constructed analogously to arithmetic expressions,
 by using various operators to combine smaller expressions.
 @command{grep} understands
 three different versions of regular expression syntax:
-``basic,'' (BRE) ``extended'' (ERE) and ``perl''.
+``basic'' (BRE), ``extended'' (ERE) and ``perl'' (PCRE).
 In GNU @command{grep},
 there is no difference in available functionality between the basic and
 extended syntaxes.
 In other implementations, basic regular expressions are less powerful.
 The following description applies to extended regular expressions;
 differences for basic regular expressions are summarized afterwards.
-Perl regular expressions give additional functionality, and are
-documented in the @i{pcresyntax}(3) and @i{pcrepattern}(3) manual pages,
-but may not be available on every system.
+Perl-compatible regular expressions give additional functionality, and
+are documented in the @i{pcresyntax}(3) and @i{pcrepattern}(3) manual
+pages, but work only if PCRE is available in the system.
 
 @menu
 * Fundamental Structure::
@@ -1720,8 +1768,8 @@ Standard grep cannot do this, as it is fundamentally line-based.
 Therefore, merely using the @code{[:space:]} character class does not
 match newlines in the way you might expect.
 
-With the GNU @command{grep} option @code{-z} (@pxref{File and
-Directory Selection}), the input is terminated by null bytes.  Thus,
+With the GNU @command{grep} option @option{-z} (@option{--null-data}), each
+input and output ``line'' is null-terminated; @pxref{Other Options}.  Thus,
 you can match newlines in the input, but typically if there is a match
 the entire input is output, so this usage is often combined with
 output-suppressing options like @option{-q}, e.g.:

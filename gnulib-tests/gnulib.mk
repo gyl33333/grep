@@ -1,6 +1,6 @@
 ## DO NOT EDIT! GENERATED AUTOMATICALLY!
 ## Process this file with automake to produce Makefile.in.
-# Copyright (C) 2002-2014 Free Software Foundation, Inc.
+# Copyright (C) 2002-2017 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -117,7 +117,6 @@ EXTRA_DIST += test-btowc1.sh test-btowc2.sh test-btowc.c signature.h macros.h
 
 TESTS += test-c-ctype
 check_PROGRAMS += test-c-ctype
-
 EXTRA_DIST += test-c-ctype.c macros.h
 
 ## end   gnulib module c-ctype-tests
@@ -162,6 +161,18 @@ check_PROGRAMS += test-ctype
 EXTRA_DIST += test-ctype.c
 
 ## end   gnulib module ctype-tests
+
+## begin gnulib module dfa-tests
+
+TESTS +=			\
+  dfa-invalid-char-class.sh	\
+  dfa-match.sh
+
+check_PROGRAMS += dfa-match-aux
+dfa_match_aux_LDADD = $(LDADD) @LIBINTL@
+EXTRA_DIST += dfa-match.sh dfa-match-aux.c dfa-invalid-char-class.sh
+
+## end   gnulib module dfa-tests
 
 ## begin gnulib module dirent-safer-tests
 
@@ -428,14 +439,33 @@ EXTRA_DIST += test-getdtablesize.c signature.h macros.h
 
 ## end   gnulib module getdtablesize-tests
 
+## begin gnulib module getopt-gnu-tests
+
+TESTS += test-getopt-gnu
+check_PROGRAMS += test-getopt-gnu
+test_getopt_gnu_LDADD = $(LDADD) $(LIBINTL)
+EXTRA_DIST += macros.h signature.h test-getopt-gnu.c test-getopt-main.h test-getopt.h test-getopt_long.h
+
+## end   gnulib module getopt-gnu-tests
+
 ## begin gnulib module getopt-posix-tests
 
-TESTS += test-getopt
-check_PROGRAMS += test-getopt
-test_getopt_LDADD = $(LDADD) $(LIBINTL)
-EXTRA_DIST += macros.h signature.h test-getopt.c test-getopt.h test-getopt_long.h
+TESTS += test-getopt-posix
+check_PROGRAMS += test-getopt-posix
+test_getopt_posix_LDADD = $(LDADD) $(LIBINTL)
+EXTRA_DIST += macros.h signature.h test-getopt-posix.c test-getopt-main.h test-getopt.h
 
 ## end   gnulib module getopt-posix-tests
+
+## begin gnulib module getprogname-tests
+
+DEFS += -DEXEEXT=\"@EXEEXT@\"
+TESTS += test-getprogname
+check_PROGRAMS += test-getprogname
+test_getprogname_LDADD = $(LDADD)
+EXTRA_DIST += test-getprogname.c
+
+## end   gnulib module getprogname-tests
 
 ## begin gnulib module gettimeofday-tests
 
@@ -564,6 +594,14 @@ check_PROGRAMS += test-langinfo
 EXTRA_DIST += test-langinfo.c
 
 ## end   gnulib module langinfo-tests
+
+## begin gnulib module limits-h-tests
+
+TESTS += test-limits-h
+check_PROGRAMS += test-limits-h
+EXTRA_DIST += test-limits-h.c
+
+## end   gnulib module limits-h-tests
 
 ## begin gnulib module locale-tests
 
@@ -981,6 +1019,14 @@ EXTRA_DIST += test-stat.h test-stat.c signature.h macros.h
 
 ## end   gnulib module stat-tests
 
+## begin gnulib module stdalign-tests
+
+TESTS += test-stdalign
+check_PROGRAMS += test-stdalign
+EXTRA_DIST += test-stdalign.c macros.h
+
+## end   gnulib module stdalign-tests
+
 ## begin gnulib module stdbool-tests
 
 TESTS += test-stdbool
@@ -1217,14 +1263,6 @@ EXTRA_DIST += test-unsetenv.c signature.h macros.h
 
 ## end   gnulib module unsetenv-tests
 
-## begin gnulib module update-copyright-tests
-
-TESTS += test-update-copyright.sh
-TESTS_ENVIRONMENT += abs_aux_dir='$(abs_aux_dir)'
-EXTRA_DIST += test-update-copyright.sh
-
-## end   gnulib module update-copyright-tests
-
 ## begin gnulib module vasnprintf
 
 
@@ -1257,6 +1295,11 @@ EXTRA_DIST += test-vc-list-files-git.sh test-vc-list-files-cvs.sh
 TESTS_ENVIRONMENT += MAKE='$(MAKE)'
 TESTS += test-verify test-verify.sh
 check_PROGRAMS += test-verify
+
+# This test expects compilation of test-verify.c to fail, and
+# each time it fails, the makefile rule does not perform the usual
+#  "mv -f $name.Tpo $name.po, so tell make clean to remove that file.
+MOSTLYCLEANFILES += .deps/test-verify.Tpo
 EXTRA_DIST += test-verify.c test-verify.sh
 
 ## end   gnulib module verify-tests
@@ -1307,7 +1350,6 @@ EXTRA_DIST += test-wctype-h.c macros.h
 
 TESTS += test-wcwidth
 check_PROGRAMS += test-wcwidth
-
 EXTRA_DIST += test-wcwidth.c signature.h macros.h
 
 ## end   gnulib module wcwidth-tests

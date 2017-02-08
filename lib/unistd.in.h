@@ -1,5 +1,5 @@
 /* Substitute for and wrapper around <unistd.h>.
-   Copyright (C) 2003-2014 Free Software Foundation, Inc.
+   Copyright (C) 2003-2017 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -55,9 +55,13 @@
 #include <stddef.h>
 
 /* mingw doesn't define the SEEK_* or *_FILENO macros in <unistd.h>.  */
+/* MSVC declares 'unlink' in <stdio.h>, not in <unistd.h>.  We must include
+   it before we  #define unlink rpl_unlink.  */
 /* Cygwin 1.7.1 declares symlinkat in <stdio.h>, not in <unistd.h>.  */
 /* But avoid namespace pollution on glibc systems.  */
 #if (!(defined SEEK_CUR && defined SEEK_END && defined SEEK_SET) \
+     || ((@GNULIB_UNLINK@ || defined GNULIB_POSIXCHECK) \
+         && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)) \
      || ((@GNULIB_SYMLINKAT@ || defined GNULIB_POSIXCHECK) \
          && defined __CYGWIN__)) \
     && ! defined __GLIBC__
@@ -402,7 +406,7 @@ _GL_WARN_ON_USE (dup3, "dup3 is unportable - "
    "VARIABLE=VALUE", terminated with a NULL.  */
 #  if defined __APPLE__ && defined __MACH__
 #   include <TargetConditionals.h>
-#   if !defined TARGET_OS_IPHONE && !defined TARGET_IPHONE_SIMULATOR
+#   if !TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
 #    define _GL_USE_CRT_EXTERNS
 #   endif
 #  endif
@@ -776,7 +780,7 @@ _GL_WARN_ON_USE (gethostname, "gethostname is unportable - "
      ${LOGNAME-$USER}        on Unix platforms,
      $USERNAME               on native Windows platforms.
  */
-# if !@HAVE_GETLOGIN@
+# if !@HAVE_DECL_GETLOGIN@
 _GL_FUNCDECL_SYS (getlogin, char *, (void));
 # endif
 _GL_CXXALIAS_SYS (getlogin, char *, (void));

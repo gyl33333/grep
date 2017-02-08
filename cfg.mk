@@ -1,5 +1,5 @@
 # Customize maint.mk                           -*- makefile -*-
-# Copyright (C) 2009-2014 Free Software Foundation, Inc.
+# Copyright (C) 2009-2017 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,6 +13,11 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Cause the tool(s) built by this package to be used also when running
+# commands via e.g., "make syntax-check".  Doing this a little sooner
+# would have avoided a grep infloop bug.
+export PATH := $(srcdir)/src:${PATH}
 
 # Used in maint.mk's web-manual rule
 manual_title = GNU Grep: Print lines matching a pattern
@@ -30,7 +35,7 @@ bootstrap-tools = autoconf,automake,gnulib
 
 # The tight_scope test gets confused about inline functions.
 # like 'to_uchar'.
-_gl_TS_unmarked_extern_functions = main usage mb_clen to_uchar
+_gl_TS_unmarked_extern_functions = main usage mb_clen to_uchar dfaerror dfawarn
 
 # Now that we have better tests, make this the default.
 export VERBOSE = yes
@@ -55,7 +60,7 @@ export VERBOSE = yes
 # 1127556 9e
 export XZ_OPT = -6e
 
-old_NEWS_hash = 8c5f53627941c649412bbabc1bb1d26a
+old_NEWS_hash = d4a1c9c6c0b35de3b2c86b8f7d35b43e
 
 # Many m4 macros names once began with 'jm_'.
 # Make sure that none are inadvertently reintroduced.
@@ -101,6 +106,12 @@ sc_prohibit_emacs__indent_tabs_mode__setting:
 	halt='use of emacs indent-tabs-mode: setting'			\
 	  $(_sc_search_regexp)
 
+# Ensure that the list of test file names in tests/Makefile.am is sorted.
+sc_sorted_tests:
+	@perl -0777 -ne \
+	    '/^TESTS =(.*?)^$$/ms; ($$t = $$1) =~ s/[\\\s\n]+/\n/g;print $$t' \
+	  tests/Makefile.am | sort -c
+
 # THANKS.in is a list of name/email pairs for people who are mentioned in
 # commit logs (and generated ChangeLog), but who are not also listed as an
 # author of a commit.  Name/email pairs of commit authors are automatically
@@ -114,17 +125,30 @@ sc_THANKS_in_duplicates:
 	    && { echo '$(ME): remove the above names from THANKS.in'	\
 		  1>&2; exit 1; } || :
 
+# Ensure that tests don't use `cmd ... && fail=1` as that hides crashes.
+# The "exclude" expression allows common idioms like `test ... && fail=1`
+# and the 2>... portion allows commands that redirect stderr and so probably
+# independently check its contents and thus detect any crash messages.
+sc_prohibit_and_fail_1:
+	@prohibit='&& fail=1'						\
+	exclude='(stat|kill|test |EGREP|grep|compare|2> *[^/])'		\
+	halt='&& fail=1 detected. Please use: returns_ 1 ... || fail=1'	\
+	in_vc_files='^tests/'						\
+	  $(_sc_search_regexp)
+
 update-copyright-env = \
   UPDATE_COPYRIGHT_USE_INTERVALS=1 \
   UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79
 
-exclude_file_name_regexp--sc_bindtextdomain = ^tests/get-mb-cur-max\.c$$
+include $(abs_top_srcdir)/dist-check.mk
+
+exclude_file_name_regexp--sc_bindtextdomain = \
+  ^tests/get-mb-cur-max\.c$$
+
 exclude_file_name_regexp--sc_prohibit_strcmp = /colorize-.*\.c$$
 exclude_file_name_regexp--sc_prohibit_xalloc_without_use = ^src/kwset\.c$$
 exclude_file_name_regexp--sc_prohibit_tab_based_indentation = \
   (Makefile|\.(am|mk)$$)
-exclude_file_name_regexp--sc_error_message_uppercase = ^src/dfa\.c$$
-exclude_file_name_regexp--sc_prohibit_strncpy = ^src/dfa\.c$$
 
 exclude_file_name_regexp--sc_prohibit_doubled_word = ^tests/count-newline$$
 

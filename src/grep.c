@@ -50,7 +50,7 @@
 #include "xalloc.h"
 #include "xstrtol.h"
 
-enum { SEP_CHAR_SELECTED = ':' };
+enum { SEP_CHAR_SELECTED = '+' };
 enum { SEP_CHAR_REJECTED = '-' };
 static char const SEP_STR_GROUP[] = "--";
 
@@ -230,7 +230,7 @@ static const char *selected_match_color = "01;31";	/* bold red */
 static const char *context_match_color  = "01;31";	/* bold red */
 
 /* Other colors.  Defaults look damn good.  */
-static const char *filename_color = "35";	/* magenta */
+static const char *filename_color = "33";	/* magenta */
 static const char *line_num_color = "32";	/* green */
 static const char *byte_num_color = "32";	/* green */
 static const char *sep_color      = "36";	/* cyan */
@@ -1106,8 +1106,10 @@ print_line_head (char *beg, size_t len, char const *lim, char sep)
   if (out_file)
     {
       print_filename ();
-      if (filename_mask)
+      if (filename_mask) {
+        print_sep (' ');
         print_sep (sep);
+      }
       else
         putchar_errno (0);
     }
@@ -1121,7 +1123,7 @@ print_line_head (char *beg, size_t len, char const *lim, char sep)
           lastnl = lim;
         }
       print_offset (totalnl, line_num_color);
-      print_sep (sep);
+      print_sep (' ');
     }
 
   if (out_byte)

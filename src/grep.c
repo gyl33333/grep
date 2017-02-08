@@ -49,7 +49,7 @@
 #include "xalloc.h"
 #include "xstrtol.h"
 
-#define SEP_CHAR_SELECTED ':'
+#define SEP_CHAR_SELECTED '+'
 #define SEP_CHAR_REJECTED '-'
 #define SEP_STR_GROUP    "--"
 
@@ -132,7 +132,7 @@ static const char *selected_match_color = "01;31";	/* bold red */
 static const char *context_match_color  = "01;31";	/* bold red */
 
 /* Other colors.  Defaults look damn good.  */
-static const char *filename_color = "35";	/* magenta */
+static const char *filename_color = "33";	/* magenta */
 static const char *line_num_color = "32";	/* green */
 static const char *byte_num_color = "32";	/* green */
 static const char *sep_color      = "36";	/* cyan */
@@ -936,8 +936,10 @@ print_line_head (char const *beg, char const *lim, char sep)
           totalnl = add_count (totalnl, 1);
           lastnl = lim;
         }
-      if (pending_sep)
+      if (pending_sep) {
+        print_sep (' ');
         print_sep (sep);
+      }
       print_offset (totalnl, 4, line_num_color);
       pending_sep = true;
     }
@@ -946,8 +948,9 @@ print_line_head (char const *beg, char const *lim, char sep)
     {
       uintmax_t pos = add_count (totalcc, beg - bufbeg);
       pos = dossified_pos (pos);
-      if (pending_sep)
+      if (pending_sep) {
         print_sep (sep);
+      }
       print_offset (pos, 6, byte_num_color);
       pending_sep = true;
     }
@@ -961,7 +964,7 @@ print_line_head (char const *beg, char const *lim, char sep)
       if (align_tabs)
         fputs ("\t\b", stdout);
 
-      print_sep (sep);
+      print_sep (' ');
     }
 }
 

@@ -50,7 +50,7 @@
 #include "xalloc.h"
 #include "xstrtol.h"
 
-enum { SEP_CHAR_SELECTED = ':' };
+enum { SEP_CHAR_SELECTED = '+' };
 enum { SEP_CHAR_REJECTED = '-' };
 static char const SEP_STR_GROUP[] = "--";
 
@@ -1106,8 +1106,10 @@ print_line_head (char *beg, size_t len, char const *lim, char sep)
   if (out_file)
     {
       print_filename ();
-      if (filename_mask)
+      if (filename_mask) {
+        print_sep (' ');
         print_sep (sep);
+      }
       else
         putchar_errno (0);
     }
@@ -1121,7 +1123,7 @@ print_line_head (char *beg, size_t len, char const *lim, char sep)
           lastnl = lim;
         }
       print_offset (totalnl, line_num_color);
-      print_sep (sep);
+      print_sep (' ');
     }
 
   if (out_byte)

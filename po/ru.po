@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grep 2.23.7\n"
 "Report-Msgid-Bugs-To: bug-grep@gnu.org\n"
-"POT-Creation-Date: 2017-02-06 17:17-0800\n"
+"POT-Creation-Date: 2017-02-09 20:23-0800\n"
 "PO-Revision-Date: 2017-02-01 09:08+0300\n"
 "Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
 "Language-Team: Russian <gnu@d07.ru>\n"
@@ -140,7 +140,7 @@ msgstr "%s: у параметра «-W %s» не может быть аргум�
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: для параметра «-W %s» требуется аргумент\n"
 
-#: lib/obstack.c:338 lib/obstack.c:340 lib/xalloc-die.c:34 src/pcresearch.c:292
+#: lib/obstack.c:338 lib/obstack.c:340 lib/xalloc-die.c:34 src/pcresearch.c:291
 msgid "memory exhausted"
 msgstr "память исчерпана"
 
@@ -739,29 +739,29 @@ msgstr "заданы конфликтующие образцы"
 msgid "invalid matcher %s"
 msgstr "неверный образец %s"
 
-#: src/grep.c:2479
+#: src/grep.c:2480
 #, c-format
 msgid "warning: GREP_OPTIONS is deprecated; please use an alias or script"
 msgstr ""
 "предупреждение: GREP_OPTIONS устарел; используйте псевдоним или сценарий"
 
-#: src/grep.c:2506
+#: src/grep.c:2507
 msgid "unknown devices method"
 msgstr "неизвестный метод для устройств"
 
-#: src/grep.c:2639
+#: src/grep.c:2640
 msgid "invalid max count"
 msgstr "неверное максимальное количество совпадений"
 
-#: src/grep.c:2697
+#: src/grep.c:2698
 msgid "unknown binary-files type"
 msgstr "неизвестный тип двоичных файлов"
 
-#: src/pcresearch.c:81
+#: src/pcresearch.c:80
 msgid "failed to allocate memory for the PCRE JIT stack"
 msgstr "ошибка выделения памяти для стека PCRE JIT"
 
-#: src/pcresearch.c:98
+#: src/pcresearch.c:97
 msgid ""
 "support for the -P option is not compiled into this --disable-perl-regexp "
 "binary"
@@ -769,35 +769,35 @@ msgstr ""
 "поддержка параметра -P не включена при компиляции данного исполняемого файла "
 "(--disable-perl-regexp)"
 
-#: src/pcresearch.c:120
+#: src/pcresearch.c:119
 msgid "-P supports only unibyte and UTF-8 locales"
 msgstr "параметр -P поддерживает только однобайтовые локали и UTF-8"
 
-#: src/pcresearch.c:126
+#: src/pcresearch.c:125
 msgid "the -P option only supports a single pattern"
 msgstr "параметр -P поддерживает только одиночный шаблон"
 
-#: src/pcresearch.c:168
+#: src/pcresearch.c:167
 msgid "internal error (should never happen)"
 msgstr "внутренняя ошибка (не должна возникать)"
 
-#: src/pcresearch.c:193
+#: src/pcresearch.c:192
 msgid "internal error"
 msgstr "внутренняя ошибка"
 
-#: src/pcresearch.c:216
+#: src/pcresearch.c:215
 msgid "exceeded PCRE's line length limit"
 msgstr "превышено ограничение длины строки PCRE"
 
-#: src/pcresearch.c:296
+#: src/pcresearch.c:295
 msgid "exhausted PCRE JIT stack"
 msgstr "исчерпан стек PCRE JIT"
 
-#: src/pcresearch.c:300
+#: src/pcresearch.c:299
 msgid "exceeded PCRE's backtracking limit"
 msgstr "исчерпан лимит в PCRE по возврату"
 
-#: src/pcresearch.c:307
+#: src/pcresearch.c:306
 #, c-format
 msgid "internal PCRE error: %d"
 msgstr "внутренняя ошибка PCRE: %d"

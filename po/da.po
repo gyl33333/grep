@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grep-2.21.78\n"
 "Report-Msgid-Bugs-To: bug-grep@gnu.org\n"
-"POT-Creation-Date: 2017-02-06 17:17-0800\n"
+"POT-Creation-Date: 2017-02-09 20:23-0800\n"
 "PO-Revision-Date: 2015-12-03 14:47+0100\n"
 "Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -157,7 +157,7 @@ msgstr "%s: flaget '-W %s' tillader ikke et argument\n"
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: flaget '-W %s' kræver et argument\n"
 
-#: lib/obstack.c:338 lib/obstack.c:340 lib/xalloc-die.c:34 src/pcresearch.c:292
+#: lib/obstack.c:338 lib/obstack.c:340 lib/xalloc-die.c:34 src/pcresearch.c:291
 msgid "memory exhausted"
 msgstr "hukommelse opbrugt"
 
@@ -751,29 +751,29 @@ msgstr "modstridende søgeudtryk angivet"
 msgid "invalid matcher %s"
 msgstr "ugyldig matcher %s"
 
-#: src/grep.c:2479
+#: src/grep.c:2480
 #, c-format
 msgid "warning: GREP_OPTIONS is deprecated; please use an alias or script"
 msgstr ""
 "advarsel: GREP_OPTIONS er forældet; brug venligst et alias eller skript"
 
-#: src/grep.c:2506
+#: src/grep.c:2507
 msgid "unknown devices method"
 msgstr "ukendt enhedsmetode"
 
-#: src/grep.c:2639
+#: src/grep.c:2640
 msgid "invalid max count"
 msgstr "ugyldig angivelse af maksimum"
 
-#: src/grep.c:2697
+#: src/grep.c:2698
 msgid "unknown binary-files type"
 msgstr "ukendt binær filtype"
 
-#: src/pcresearch.c:81
+#: src/pcresearch.c:80
 msgid "failed to allocate memory for the PCRE JIT stack"
 msgstr "kunne ikke allokere hukommelse til PCRE JIT-stakken"
 
-#: src/pcresearch.c:98
+#: src/pcresearch.c:97
 msgid ""
 "support for the -P option is not compiled into this --disable-perl-regexp "
 "binary"
@@ -781,35 +781,35 @@ msgstr ""
 "understøttelse for flaget -P er ikke kompileret ind i denne binærfil for --"
 "disable-perl-regexp"
 
-#: src/pcresearch.c:120
+#: src/pcresearch.c:119
 msgid "-P supports only unibyte and UTF-8 locales"
 msgstr "-P understøtter kun unibyte- og UTF-8-sprogindstillinger"
 
-#: src/pcresearch.c:126
+#: src/pcresearch.c:125
 msgid "the -P option only supports a single pattern"
 msgstr "flaget -P understøtter kun et enkelt mønster"
 
-#: src/pcresearch.c:168
+#: src/pcresearch.c:167
 msgid "internal error (should never happen)"
 msgstr "intern fejl (burde aldrig ske)"
 
-#: src/pcresearch.c:193
+#: src/pcresearch.c:192
 msgid "internal error"
 msgstr "intern fejl"
 
-#: src/pcresearch.c:216
+#: src/pcresearch.c:215
 msgid "exceeded PCRE's line length limit"
 msgstr "overskred maksimal linjelængde for PCRE"
 
-#: src/pcresearch.c:296
+#: src/pcresearch.c:295
 msgid "exhausted PCRE JIT stack"
 msgstr "PCRE JIT-stak tømt"
 
-#: src/pcresearch.c:300
+#: src/pcresearch.c:299
 msgid "exceeded PCRE's backtracking limit"
 msgstr "overskred tilbagerækkevidde for PCRE"
 
-#: src/pcresearch.c:307
+#: src/pcresearch.c:306
 #, c-format
 msgid "internal PCRE error: %d"
 msgstr "intern PCRE-fejl: %d"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNU grep-2.25.92\n"
 "Report-Msgid-Bugs-To: bug-grep@gnu.org\n"
-"POT-Creation-Date: 2017-02-06 17:17-0800\n"
+"POT-Creation-Date: 2017-02-09 20:23-0800\n"
 "PO-Revision-Date: 2016-10-23 18:01+0200\n"
 "Last-Translator: Angel Mompo <mecatxis@mecatxis.cat>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
@@ -138,7 +138,7 @@ msgstr "%s: l'opció «-W %s» no permet un argument\n"
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: l'opció «-W %s» necessita un argument\n"
 
-#: lib/obstack.c:338 lib/obstack.c:340 lib/xalloc-die.c:34 src/pcresearch.c:292
+#: lib/obstack.c:338 lib/obstack.c:340 lib/xalloc-die.c:34 src/pcresearch.c:291
 msgid "memory exhausted"
 msgstr "memòria exhaurida"
 
@@ -745,28 +745,28 @@ msgstr "s'han especificat expressions conflictives"
 msgid "invalid matcher %s"
 msgstr "l'expressió %s no és vàlida"
 
-#: src/grep.c:2479
+#: src/grep.c:2480
 #, c-format
 msgid "warning: GREP_OPTIONS is deprecated; please use an alias or script"
 msgstr "avís: GREP_OPTIONS està desfasat; feu servir un alies o un script"
 
-#: src/grep.c:2506
+#: src/grep.c:2507
 msgid "unknown devices method"
 msgstr "el mètode de dispositius és desconegut"
 
-#: src/grep.c:2639
+#: src/grep.c:2640
 msgid "invalid max count"
 msgstr "el comptador de màxims no és vàlid"
 
-#: src/grep.c:2697
+#: src/grep.c:2698
 msgid "unknown binary-files type"
 msgstr "el tipus de fitxer binari és desconegut"
 
-#: src/pcresearch.c:81
+#: src/pcresearch.c:80
 msgid "failed to allocate memory for the PCRE JIT stack"
 msgstr "no s'ha pogut assignar memòria per la pila JIT del PCRE"
 
-#: src/pcresearch.c:98
+#: src/pcresearch.c:97
 msgid ""
 "support for the -P option is not compiled into this --disable-perl-regexp "
 "binary"
@@ -774,37 +774,37 @@ msgstr ""
 "el suport per l'opció -P no està  compilat a aquest binari --disable-perl-"
 "regexp"
 
-#: src/pcresearch.c:120
+#: src/pcresearch.c:119
 msgid "-P supports only unibyte and UTF-8 locales"
 msgstr "-P només permet la configuració local en unibyte i en UTF-8"
 
-#: src/pcresearch.c:126
+#: src/pcresearch.c:125
 msgid "the -P option only supports a single pattern"
 msgstr "l'opció -P només suporta un sol patró"
 
-#: src/pcresearch.c:168
+#: src/pcresearch.c:167
 msgid "internal error (should never happen)"
 msgstr "error intern (no hauria de passar mai)"
 
-#: src/pcresearch.c:193
+#: src/pcresearch.c:192
 msgid "internal error"
 msgstr "error intern"
 
 # PCRE is 'Perl Compatible Regular Expression'
-#: src/pcresearch.c:216
+#: src/pcresearch.c:215
 msgid "exceeded PCRE's line length limit"
 msgstr "s'ha superat el límit de longitud de línia del PCRE"
 
-#: src/pcresearch.c:296
+#: src/pcresearch.c:295
 msgid "exhausted PCRE JIT stack"
 msgstr "S'ha acabat la pila del PCRE JIT"
 
 # PCRE is 'Perl Compatible Regular Expression'
-#: src/pcresearch.c:300
+#: src/pcresearch.c:299
 msgid "exceeded PCRE's backtracking limit"
 msgstr "s'ha superat el límit de l'estratègia «tornada enrere» del PCRE"
 
-#: src/pcresearch.c:307
+#: src/pcresearch.c:306
 #, c-format
 msgid "internal PCRE error: %d"
 msgstr "error intern del PCRE: %d"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grep 2.5g\n"
 "Report-Msgid-Bugs-To: bug-grep@gnu.org\n"
-"POT-Creation-Date: 2017-02-06 17:17-0800\n"
+"POT-Creation-Date: 2017-02-09 20:23-0800\n"
 "PO-Revision-Date: 2003-07-22 17:18+0300\n"
 "Last-Translator: Ales Nyakhaychyk <nab@mail.by>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -140,7 +140,7 @@ msgstr "%s: выбар \"-W %s\" не дазваляе довады\n"
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: выбар \"%s\" патрабуе довад\n"
 
-#: lib/obstack.c:338 lib/obstack.c:340 lib/xalloc-die.c:34 src/pcresearch.c:292
+#: lib/obstack.c:338 lib/obstack.c:340 lib/xalloc-die.c:34 src/pcresearch.c:291
 msgid "memory exhausted"
 msgstr "памяць вычарпана"
 
@@ -669,63 +669,63 @@ msgstr "заданы супярэчлівыя супадальнікі"
 msgid "invalid matcher %s"
 msgstr "недапушчальны найбольшы лічыльнік"
 
-#: src/grep.c:2479
+#: src/grep.c:2480
 #, c-format
 msgid "warning: GREP_OPTIONS is deprecated; please use an alias or script"
 msgstr ""
 
-#: src/grep.c:2506
+#: src/grep.c:2507
 msgid "unknown devices method"
 msgstr "невядомы мэтад пралад"
 
-#: src/grep.c:2639
+#: src/grep.c:2640
 msgid "invalid max count"
 msgstr "недапушчальны найбольшы лічыльнік"
 
-#: src/grep.c:2697
+#: src/grep.c:2698
 msgid "unknown binary-files type"
 msgstr "невядомы від дваічнага файла"
 
-#: src/pcresearch.c:81
+#: src/pcresearch.c:80
 msgid "failed to allocate memory for the PCRE JIT stack"
 msgstr ""
 
-#: src/pcresearch.c:98
+#: src/pcresearch.c:97
 msgid ""
 "support for the -P option is not compiled into this --disable-perl-regexp "
 "binary"
 msgstr ""
 
-#: src/pcresearch.c:120
+#: src/pcresearch.c:119
 msgid "-P supports only unibyte and UTF-8 locales"
 msgstr ""
 
-#: src/pcresearch.c:126
+#: src/pcresearch.c:125
 #, fuzzy
 msgid "the -P option only supports a single pattern"
 msgstr "Выбар -P непадтрымліваецца"
 
-#: src/pcresearch.c:168
+#: src/pcresearch.c:167
 msgid "internal error (should never happen)"
 msgstr ""
 
-#: src/pcresearch.c:193
+#: src/pcresearch.c:192
 msgid "internal error"
 msgstr ""
 
-#: src/pcresearch.c:216
+#: src/pcresearch.c:215
 msgid "exceeded PCRE's line length limit"
 msgstr ""
 
-#: src/pcresearch.c:296
+#: src/pcresearch.c:295
 msgid "exhausted PCRE JIT stack"
 msgstr ""
 
-#: src/pcresearch.c:300
+#: src/pcresearch.c:299
 msgid "exceeded PCRE's backtracking limit"
 msgstr ""
 
-#: src/pcresearch.c:307
+#: src/pcresearch.c:306
 #, c-format
 msgid "internal PCRE error: %d"
 msgstr ""

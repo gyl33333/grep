@@ -1,4 +1,31 @@
+2017-02-09  Jim Meyering  <meyering@fb.com>
+
+	version 3.0
+	* NEWS: Record release date.
+
+2017-02-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	grep: do not mishandle \. in multiple patterns
+	Problem reported by Lars Wendler (Bug#25655).
+	* NEWS: Document this.
+	* src/grep.c (try_fgrep_pattern): Fix typo that prevented
+	keys from being properly updated.
+	* tests/foad1: Test for the bug.
+
+2017-02-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Do not assume PCRE 8.20 or later
+	Problem reported by Zube (Bug#25647)
+	* NEWS: Document this.
+	* src/pcresearch.c (struct pcre.com.jit_stack):
+	Declare only if PCRE_STUDY_JIT_COMPILE.
+
 2017-02-06  Jim Meyering  <meyering@fb.com>
+
+	maint: post-release administrivia
+	* NEWS: Add header line for next release.
+	* .prev-version: Record previous version.
+	* cfg.mk (old_NEWS_hash): Auto-update.
 
 	version 2.28
 	* NEWS: Record release date.

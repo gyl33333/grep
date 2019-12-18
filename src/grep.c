@@ -52,7 +52,7 @@
 #include "xbinary-io.h"
 #include "xstrtol.h"
 
-enum { SEP_CHAR_SELECTED = '+' };
+enum { SEP_CHAR_SELECTED = ':' };
 enum { SEP_CHAR_REJECTED = '-' };
 static char const SEP_STR_GROUP[] = "--";
 
@@ -1100,10 +1100,8 @@ print_line_head (char *beg, size_t len, char const *lim, char sep)
   if (out_file)
     {
       print_filename ();
-      if (filename_mask) {
-        print_sep (' ');
+      if (filename_mask)
         print_sep (sep);
-      }
       else
         putchar_errno (0);
     }
@@ -1117,7 +1115,7 @@ print_line_head (char *beg, size_t len, char const *lim, char sep)
           lastnl = lim;
         }
       print_offset (totalnl, line_num_color);
-      print_sep (' ');
+      print_sep (sep);
     }
 
   if (out_byte)
